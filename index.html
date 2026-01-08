@@ -4,15 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Garage Racing</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       font-family: 'Orbitron', sans-serif;
-      background: url('bg-garage.png') center/cover no-repeat fixed;
+      background: url('bg-garage.png') center / cover no-repeat fixed;
       color: #fff;
       height: 100vh;
+      overflow: hidden;
     }
+
     .overlay {
       background: rgba(0,0,0,0.6);
       height: 100%;
@@ -21,11 +26,13 @@
       flex-direction: column;
       justify-content: space-between;
     }
+
     header {
       display: flex;
       justify-content: space-between;
       padding: 20px 40px;
     }
+
     .rank {
       border: 3px solid #999;
       border-radius: 50%;
@@ -35,14 +42,18 @@
       align-items: center;
       justify-content: center;
       font-weight: 800;
+      text-align: center;
     }
+
     .wallet {
       text-align: right;
     }
+
     .wallet .balance {
       font-size: 22px;
       font-weight: 600;
     }
+
     main {
       position: relative;
       flex: 1;
@@ -50,17 +61,120 @@
       align-items: center;
       padding: 0 60px;
     }
+
     .car-info {
       max-width: 300px;
+      z-index: 5;
     }
-    .car-info h2 {
-      margin-bottom: 10px;
-    }
+
+    .car-info h2 { margin-bottom: 10px; }
     .car-info p {
       font-size: 14px;
       opacity: 0.85;
       margin-bottom: 4px;
     }
+
+    /* ===== LUZ VOLUMÉTRICA ===== */
+    .ground-light {
+      position: absolute;
+      right: 50%;
+      bottom: 6%;
+      transform: translateX(50%);
+      width: 520px;
+      height: 260px;
+
+      background: radial-gradient(
+        ellipse at center,
+        rgba(255,255,255,0.25) 0%,
+        rgba(255,255,255,0.15) 20%,
+        rgba(255,255,255,0.08) 40%,
+        rgba(255,255,255,0.03) 55%,
+        rgba(255,255,255,0) 70%
+      );
+
+      filter: blur(35px);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ===== POEIRA ===== */
+    .dust {
+      position: absolute;
+      right: 50%;
+      bottom: 8%;
+      transform: translateX(50%);
+      width: 520px;
+      height: 260px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .dust span {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 50%;
+      animation: dustFloat 6s infinite ease-in-out;
+      opacity: 0;
+    }
+
+    .dust span:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .dust span:nth-child(2) { left: 30%; animation-delay: 1s; }
+    .dust span:nth-child(3) { left: 50%; animation-delay: 2s; }
+    .dust span:nth-child(4) { left: 70%; animation-delay: 3s; }
+    .dust span:nth-child(5) { left: 85%; animation-delay: 4s; }
+
+    @keyframes dustFloat {
+      0% { transform: translateY(30px); opacity: 0; }
+      20% { opacity: 0.6; }
+      50% { opacity: 0.8; }
+      80% { opacity: 0.4; }
+      100% { transform: translateY(-80px); opacity: 0; }
+    }
+
+    /* ===== NEBLINA REATIVA AO CARRO ===== */
+    .fog {
+    position: absolute;
+    right: 50%;
+    bottom: 3%;
+    transform: translateX(50%);
+    transform-origin: center;
+
+    width: 760px;
+    height: 200px;
+
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255,255,255,0.38) 0%,
+        rgba(255,255,255,0.25) 25%,
+        rgba(255,255,255,0.15) 45%,
+        rgba(255,255,255,0.08) 65%,
+        rgba(255,255,255,0) 80%
+    );
+
+    filter: blur(55px);
+    opacity: 0.85;
+
+    transition: transform 0.35s ease-out, opacity 0.35s ease-out;
+    pointer-events: none;
+    z-index: 1;
+    }
+    .fog-back {
+        opacity: 0.45;
+        filter: blur(70px);
+        animation-duration: 18s;
+        }
+
+
+
+    @keyframes fogMove {
+      0% { transform: translateX(50%) translateX(-30px); }
+      50% { transform: translateX(50%) translateX(30px); }
+      100% { transform: translateX(50%) translateX(-30px); }
+    }
+
+    /* ===== CARRO ===== */
     .car {
       position: absolute;
       right: 50%;
@@ -71,13 +185,7 @@
       justify-content: center;
       align-items: center;
       pointer-events: none;
-    }
-
-    .car img {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      filter: drop-shadow(0 25px 45px rgba(0,0,0,0.6));
+      z-index: 3;
     }
 
     .car-shadow {
@@ -89,28 +197,33 @@
       filter: blur(10px);
       z-index: 1;
     }
+
     .car img {
       width: 100%;
-      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
+      z-index: 2;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.7));
     }
+
     footer {
       display: flex;
       justify-content: space-around;
       background: rgba(20,20,20,0.85);
       padding: 20px;
     }
+
     .menu-item {
-      text-align: center;
       font-size: 14px;
       cursor: pointer;
       transition: 0.3s;
     }
+
     .menu-item:hover {
       color: #00ff88;
       transform: translateY(-4px);
     }
   </style>
 </head>
+
 <body>
   <div class="overlay">
     <header>
@@ -130,6 +243,13 @@
         <p>Torque: 720 LBFT</p>
         <p>Peso: 1400 KG</p>
       </div>
+
+      <div class="ground-light"></div>
+      <div class="dust"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="fog"></div>
+      <div class="fog fog-back"></div>
+
+
       <div class="car">
         <div class="car-shadow"></div>
         <img src="car.png" alt="Carro">
@@ -144,5 +264,35 @@
       <div class="menu-item">Dinheiro</div>
     </footer>
   </div>
+ <script>
+  const car = document.querySelector('.car');
+  const fog = document.querySelector('.fog');
+
+  document.addEventListener('mousemove', (e) => {
+    const rect = car.getBoundingClientRect();
+
+    // posição relativa ao carro
+    const offsetX = (e.clientX - (rect.left + rect.width / 2)) / 40;
+    const offsetY = (e.clientY - (rect.top + rect.height / 2)) / 40;
+
+    // limite de deslocamento
+    const moveX = Math.max(-20, Math.min(20, offsetX));
+    const moveY = Math.max(-10, Math.min(10, offsetY));
+
+    fog.style.transform = `
+      translateX(50%)
+      translate(${moveX}px, ${moveY}px)
+      scale(1.05)
+    `;
+
+    fog.style.opacity = 0.75;
+  });
+
+  document.addEventListener('mouseleave', () => {
+    fog.style.transform = 'translateX(50%)';
+    fog.style.opacity = 0.85;
+  });
+</script>
+ 
 </body>
 </html>
