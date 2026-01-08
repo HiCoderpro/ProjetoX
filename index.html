@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Garage Racing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: url('bg-garage.png') center/cover no-repeat fixed;
+      color: #fff;
+      height: 100vh;
+    }
+    .overlay {
+      background: rgba(0,0,0,0.6);
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 40px;
+    }
+    .rank {
+      border: 3px solid #999;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+    .wallet {
+      text-align: right;
+    }
+    .wallet .balance {
+      font-size: 22px;
+      font-weight: 600;
+    }
+    main {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 60px;
+    }
+    .car-info {
+      max-width: 300px;
+    }
+    .car-info h2 {
+      margin-bottom: 10px;
+    }
+    .car-info p {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-bottom: 4px;
+    }
+    .car {
+      position: absolute;
+      right: 50%;
+      bottom: 8%;
+      transform: translateX(50%);
+      max-width: 560px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .car img {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      filter: drop-shadow(0 25px 45px rgba(0,0,0,0.6));
+    }
+
+    .car-shadow {
+      position: absolute;
+      bottom: -18px;
+      width: 85%;
+      height: 40px;
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 35%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0) 75%);
+      filter: blur(10px);
+      z-index: 1;
+    }
+    .car img {
+      width: 100%;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
+    }
+    footer {
+      display: flex;
+      justify-content: space-around;
+      background: rgba(20,20,20,0.85);
+      padding: 20px;
+    }
+    .menu-item {
+      text-align: center;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .menu-item:hover {
+      color: #00ff88;
+      transform: translateY(-4px);
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <header>
+      <div class="rank">RANK<br>17</div>
+      <div class="wallet">
+        <div class="balance">R$ 125.430</div>
+        <small>Modo Premium</small>
+      </div>
+    </header>
+
+    <main>
+      <div class="car-info">
+        <h2>NIGHTFURY 3000 GT</h2>
+        <p>Classe: S</p>
+        <p>PR: 925</p>
+        <p>Potência: 850 HP</p>
+        <p>Torque: 720 LBFT</p>
+        <p>Peso: 1400 KG</p>
+      </div>
+      <div class="car">
+        <div class="car-shadow"></div>
+        <img src="car.png" alt="Carro">
+      </div>
+    </main>
+
+    <footer>
+      <div class="menu-item">Marketplace</div>
+      <div class="menu-item">Oficina</div>
+      <div class="menu-item">Corridas</div>
+      <div class="menu-item">Customizar</div>
+      <div class="menu-item">Dinheiro</div>
+    </footer>
+  </div>
+</body>
+</html>
